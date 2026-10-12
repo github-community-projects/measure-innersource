@@ -3,8 +3,9 @@
 import json
 from unittest.mock import MagicMock, patch
 
-import measure_innersource as mi
 import pytest
+
+import measure_innersource as mi
 
 
 def test_evaluate_markdown_file_size_splits(tmp_path, monkeypatch):

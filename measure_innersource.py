@@ -10,13 +10,14 @@ import json
 import shutil
 from pathlib import Path
 
+from requests.structures import CaseInsensitiveDict
+
 from auth import auth_to_github, get_github_app_installation_token
 from config import get_env_vars
 from constants import GITHUB_ISSUE_BODY_MAX_CHARS
 from logging_config import get_logger, setup_logging
 from markdown_helpers import markdown_too_large_for_issue_body, split_markdown_file
 from markdown_writer import write_to_markdown
-from requests.structures import CaseInsensitiveDict
 
 
 def evaluate_markdown_file_size(output_file: str) -> None:
@@ -132,7 +133,7 @@ def main():  # pragma: no cover
         logger.info("Fetching repository data for %s/%s...", owner, repo)
         try:
             repo_data = github_connection.get_repo(f"{owner}/{repo}")
-        except Exception:  # pylint: disable=broad-exception-caught
+        except Exception:  # noqa: BLE001  # pylint: disable=broad-exception-caught
             logger.error(
                 "Unable to fetch repository %s/%s specified. Exiting.", owner, repo
             )
