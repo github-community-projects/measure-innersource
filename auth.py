@@ -154,6 +154,6 @@ def get_github_app_installation_token(
             gi = GithubIntegration(auth=app_auth)
         installation_token = gi.get_access_token(int(gh_app_installation_id))
         return installation_token.token
-    except Exception as e:  # pylint: disable=broad-exception-caught
+    except Exception as e:  # noqa: BLE001  # pylint: disable=broad-exception-caught
         print(f"Request failed: {e}")
         return None

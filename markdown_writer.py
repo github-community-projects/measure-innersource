@@ -174,29 +174,34 @@ def write_to_markdown(
             )
         report_file.write("## Team Members that Own the Repo:\n")
         if team_members_that_own_the_repo:
-            for member in team_members_that_own_the_repo:
-                report_file.write(f"- {member}\n")
+            report_file.writelines(
+                f"- {member}\n" for member in team_members_that_own_the_repo
+            )
         else:
             report_file.write("No team members available.\n")
 
         report_file.write("\n## All Contributors:\n")
         if all_contributors:
-            for contributor in all_contributors:
-                report_file.write(f"- {contributor}\n")
+            report_file.writelines(
+                f"- {contributor}\n" for contributor in all_contributors
+            )
         else:
             report_file.write("No contributors found.\n")
 
         report_file.write("\n## Innersource Contributors:\n")
         if innersource_contributors:
-            for contributor in innersource_contributors:
-                report_file.write(f"- {contributor}\n")
+            report_file.writelines(
+                f"- {contributor}\n" for contributor in innersource_contributors
+            )
         else:
             report_file.write("No InnerSource contributors found.\n")
 
         report_file.write("\n## Innersource Contribution Counts:\n")
         if innersource_contribution_counts:
-            for contributor, count in innersource_contribution_counts.items():
-                report_file.write(f"- {contributor}: {count} contributions\n")
+            report_file.writelines(
+                f"- {contributor}: {count} contributions\n"
+                for contributor, count in innersource_contribution_counts.items()
+            )
         else:
             report_file.write("No InnerSource contribution counts available.\n")
 

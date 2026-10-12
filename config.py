@@ -13,8 +13,9 @@ Functions:
 import os
 from os.path import dirname, join
 
-from constants import DEFAULT_CHUNK_SIZE, MIN_CHUNK_SIZE
 from dotenv import load_dotenv
+
+from constants import DEFAULT_CHUNK_SIZE, MIN_CHUNK_SIZE
 
 
 class EnvVars:
