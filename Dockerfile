@@ -1,6 +1,5 @@
 #checkov:skip=CKV_DOCKER_2
 #checkov:skip=CKV_DOCKER_3
-#trivy:ignore:AVD-DS-0002
 FROM python:3.15.0-slim@sha256:f5b92f2a669a4c347044f29367f31983280b648250ca94dea66f98c53bc87e58
 LABEL com.github.actions.name="measure-innersource" \
     com.github.actions.description="Measure and report on the InnerSource collaboration occurring in a given repository" \
@@ -18,9 +17,14 @@ COPY pyproject.toml uv.lock *.py /action/workspace/
 
 COPY --from=ghcr.io/astral-sh/uv:0.10.9@sha256:10902f58a1606787602f303954cea099626a4adb02acbac4c69920fe9d278f82 /uv /uvx /bin/
 
-RUN uv sync --frozen --no-dev --no-editable \
-    && apt-get -y update \
-    && apt-get -y install --no-install-recommends git=1:2.47.3-0+deb13u1 \
+RUN apt-get -y update \
+    && apt-get -y install --no-install-recommends \
+        build-essential=12.12 \
+        git=1:2.47.3-0+deb13u1 \
+        libffi-dev=3.4.8-2 \
+        libffi8=3.4.8-2 \
+    && uv sync --frozen --no-dev --no-editable \
+    && apt-get -y purge --auto-remove build-essential libffi-dev \
     && rm -rf /var/lib/apt/lists/*
 
 # Add a simple healthcheck to satisfy container scanners
